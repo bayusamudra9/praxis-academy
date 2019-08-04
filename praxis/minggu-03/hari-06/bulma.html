@@ -13,10 +13,44 @@
       <h1 class="title">
         Hello World
       </h1>
-      <p class="subtitle">
+      <p class="subtitle button">
         My first website with <strong>Bulma</strong>!
       </p>
     </div>
+    <p>
+    <div class="columns">
+            <div class="column">1</div>
+            <div class="column">2</div>
+            <div class="column">3</div>
+            <div class="column">4</div>
+            <div class="column">5</div>
+    </div>
+    </p>
   </section>
+    <script src="https://unpkg.com/marked@0.3.6"></script>
+    <script src="https://unpkg.com/lodash@4.16.0"></script>
+
+    <div id="editor">
+    <textarea :value="input" @input="update"></textarea>
+    <div v-html="compiledMarkdown"></div>
+    </div>
+  <script>
+    new Vue({
+    el: '#editor',
+    data: {
+        input: '# hello'
+    },
+    computed: {
+        compiledMarkdown: function () {
+        return marked(this.input, { sanitize: true })
+        }
+    },
+    methods: {
+        update: _.debounce(function (e) {
+        this.input = e.target.value
+        }, 300)
+    }
+    })
+  </script>
   </body>
 </html>
